@@ -113,9 +113,12 @@ public class TaskService {
         task.setOrder(dto.getOrder());
         task.setType(Type.MULTIPLE_CHOICE);
 
-        List<TaskOption> options = dto.getOptions().stream()
-                .map(o -> new TaskOption(task, o.getOption(), o.isCorrect()))
-                .toList();
+        List<TaskOption> options = new ArrayList<>();
+
+        for (TaskOptionDTO o : dto.getOptions()) {
+            TaskOption taskOption = new TaskOption(task, o.getOption(), o.isCorrect());
+            options.add(taskOption);
+        }
 
         task.setOptions(options);
 
