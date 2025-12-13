@@ -37,8 +37,8 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.POST, "/course/**").hasRole("INSTRUCTOR")
-                        .requestMatchers("/instructor/**").hasRole("INSTRUCTOR")
-                        .requestMatchers(HttpMethod.GET, "/courses/**").hasRole("INSTRUCTOR")
+                        .requestMatchers(HttpMethod.GET, "/instructor/*/courses").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/**").authenticated()
                         .anyRequest().authenticated()
                 )
                 .httpBasic(Customizer.withDefaults());
