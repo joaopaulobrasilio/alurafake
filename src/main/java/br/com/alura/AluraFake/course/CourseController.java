@@ -1,10 +1,14 @@
 package br.com.alura.AluraFake.course;
 
+import br.com.alura.AluraFake.course.*;
+import br.com.alura.AluraFake.course.dto.CourseListItemDTO;
+import br.com.alura.AluraFake.course.dto.NewCourseDTO;
 import br.com.alura.AluraFake.user.*;
-import br.com.alura.AluraFake.util.ErrorItemDTO;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
+import org.springframework.security.core.Authentication;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,27 +20,35 @@ public class CourseController {
     private final CourseRepository courseRepository;
     private final UserRepository userRepository;
 
+    private final CourseReportService courseReportService;
+    private final CourseService courseService;
+
     @Autowired
-    public CourseController(CourseRepository courseRepository, UserRepository userRepository){
+    public CourseController(CourseRepository courseRepository, UserRepository userRepository, CourseReportService courseReportService, CourseService courseService) {
         this.courseRepository = courseRepository;
         this.userRepository = userRepository;
+        this.courseReportService = courseReportService;
+        this.courseService = courseService;
     }
 
     @Transactional
     @PostMapping("/course/new")
-    public ResponseEntity createCourse(@Valid @RequestBody NewCourseDTO newCourse) {
+    public ResponseEntity createCourse(@Valid @RequestBody NewCourseDTO newCourse, Authentication authentication) {
 
         //Caso implemente o bonus, pegue o instrutor logado
-        Optional<User> possibleAuthor = userRepository
-                .findByEmail(newCourse.getEmailInstructor())
-                .filter(User::isInstructor);
+        // email do usuário autenticado
+        String email = authentication.getName();
 
-        if(possibleAuthor.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new ErrorItemDTO("emailInstructor", "Usuário não é um instrutor"));
+        User instructor = userRepository.findByEmail(email)
+                .orElseThrow(() ->
+                        new EntityNotFoundException("Usuário não encontrado")
+                );
+
+        // redundância de segurança (ok para o desafio)
+        if (!instructor.isInstructor()) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
-
-        Course course = new Course(newCourse.getTitle(), newCourse.getDescription(), possibleAuthor.get());
+        Course course = new Course(newCourse.getTitle(), newCourse.getDescription(), instructor);
 
         courseRepository.save(course);
         return ResponseEntity.status(HttpStatus.CREATED).build();
@@ -50,8 +62,17 @@ public class CourseController {
         return ResponseEntity.ok(courses);
     }
 
+    @GetMapping("/instructor/{id}/courses")
+    public ResponseEntity<InstructorCourseReportResponse> reportCourses(
+            @PathVariable Long id
+    ) {
+        return ResponseEntity.ok(courseReportService.generate(id));
+    }
+
     @PostMapping("/course/{id}/publish")
     public ResponseEntity createCourse(@PathVariable("id") Long id) {
+
+        courseService.publishCourse(id);
         return ResponseEntity.ok().build();
     }
 
