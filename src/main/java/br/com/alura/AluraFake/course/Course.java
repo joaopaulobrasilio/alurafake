@@ -22,7 +22,8 @@ public class Course {
     private LocalDateTime publishedAt;
 
     @Deprecated
-    public Course(){}
+    public Course() {
+    }
 
     public Course(String title, String description, User instructor) {
         Assert.isTrue(instructor.isInstructor(), "Usuario deve ser um instrutor");
@@ -44,6 +45,10 @@ public class Course {
         return title;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public void setStatus(Status status) {
         this.status = status;
     }
@@ -58,6 +63,10 @@ public class Course {
 
     public Status getStatus() {
         return status;
+    }
+
+    public void setPublishedAt(LocalDateTime publishedAt) {
+        this.publishedAt = publishedAt;
     }
 
     public LocalDateTime getPublishedAt() {
