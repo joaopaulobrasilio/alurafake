@@ -39,6 +39,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/course/**").hasRole("INSTRUCTOR")
                         .requestMatchers(HttpMethod.GET, "/instructor/*/courses").authenticated()
                         .requestMatchers(HttpMethod.GET, "/**").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/user/new").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/user/all").permitAll()
                         .anyRequest().authenticated()
                 )
                 .httpBasic(Customizer.withDefaults());
