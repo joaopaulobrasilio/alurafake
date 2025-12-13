@@ -13,10 +13,18 @@ public class NewTaskDTO {
     private String statement;
 
     @NotNull
-    private Type type;
+    private Integer order;
+
+    public Long getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(Long courseId) {
+        this.courseId = courseId;
+    }
 
     @NotNull
-    private Integer order;
+    private Long courseId;  // ← adicione este campo
 
     private List<TaskOptionDTO> options;
 
@@ -26,14 +34,6 @@ public class NewTaskDTO {
 
     public void setStatement(String statement) {
         this.statement = statement;
-    }
-
-    public Type getType() {
-        return type;
-    }
-
-    public void setType(Type type) {
-        this.type = type;
     }
 
     public Integer getOrder() {
@@ -51,4 +51,7 @@ public class NewTaskDTO {
     public void setOptions(List<TaskOptionDTO> options) {
         this.options = options;
     }
+
+
+
 }
