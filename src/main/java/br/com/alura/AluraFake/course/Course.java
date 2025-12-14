@@ -37,9 +37,9 @@ public class Course {
         this.instructor = instructor;
     }
 
-    @Deprecated
-    public Course(String java_básico, String curso_de_java, User instructor, Status published) {
-    }
+   public Course(){
+
+   }
 
     public Course(String title, String description, User instructor) {
         Assert.isTrue(instructor.isInstructor(), "Usuario deve ser um instrutor");
