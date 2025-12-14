@@ -1,6 +1,5 @@
 package br.com.alura.AluraFake.course;
 
-import br.com.alura.AluraFake.course.*;
 import br.com.alura.AluraFake.course.dto.CourseListItemDTO;
 import br.com.alura.AluraFake.course.dto.NewCourseDTO;
 import br.com.alura.AluraFake.user.*;
@@ -8,7 +7,6 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
-import org.springframework.security.core.Authentication;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,18 +31,16 @@ public class CourseController {
 
     @Transactional
     @PostMapping("/course/new")
-    public ResponseEntity createCourse(@Valid @RequestBody NewCourseDTO newCourse, Authentication authentication) {
+    public ResponseEntity createCourse(@Valid @RequestBody NewCourseDTO newCourse) {
 
         //Caso implemente o bonus, pegue o instrutor logado
         // email do usuário autenticado
-        String email = authentication.getName();
 
-        User instructor = userRepository.findByEmail(email)
+        User instructor = userRepository.findByEmail(newCourse.getEmailInstructor())
                 .orElseThrow(() ->
                         new EntityNotFoundException("Usuário não encontrado")
                 );
 
-        // redundância de segurança (ok para o desafio)
         if (!instructor.isInstructor()) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
