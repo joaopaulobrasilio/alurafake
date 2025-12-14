@@ -12,6 +12,11 @@ public class TaskOptionDTO {
     @JsonProperty("isCorrect")
     private boolean isCorrect;
 
+    public TaskOptionDTO(String option, boolean isCorrect) {
+        this.option = option;
+        this.isCorrect = isCorrect;
+    }
+
     @JsonProperty("isCorrect")
     public boolean isCorrect() {
         return isCorrect;
