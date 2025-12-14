@@ -21,8 +21,24 @@ public class Course {
     private Status status;
     private LocalDateTime publishedAt;
 
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setInstructor(User instructor) {
+        this.instructor = instructor;
+    }
+
     @Deprecated
-    public Course() {
+    public Course(String java_básico, String curso_de_java, User instructor, Status published) {
     }
 
     public Course(String title, String description, User instructor) {
