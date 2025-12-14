@@ -21,7 +21,7 @@ public class TaskValidatorService {
     }
 
     public void validateCourseStatus(Course course) {
-        if (course.getStatus() == Status.BUILDING) {
+        if (!course.getStatus().equals(Status.BUILDING)) {
             throw new CourseStatusException("Não é possível adicionar uma atividade a um curso que não está em BUILDING.");
         }
     }
