@@ -1,0 +1,26 @@
+name: Tests Automatics
+
+on:
+    push:
+        branches:
+            - feat_alurafake_dev_final
+    pull_request:
+        branches:
+            - main
+
+jobs:
+    build-and-test:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout in code
+              uses: actions/checkout@v3
+
+            - name: Configuration Java
+              uses: actions/setup-java@v3
+              with:
+                  distribution: temurin
+                  java-version: '21'
+
+            - name: Build e Testes Maven
+              run: ./mvnw clean test
