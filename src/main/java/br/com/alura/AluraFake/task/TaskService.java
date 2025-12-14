@@ -86,7 +86,7 @@ public class TaskService {
         }
         task.setOptions(options);
 
-         taskRepository.save(task);
+        taskRepository.save(task);
     }
 
     @Transactional
@@ -96,6 +96,8 @@ public class TaskService {
 
         validator.validateCourseStatus(course);
         validator.validateStatement(dto.getStatement());
+
+        validator.validateOptions(dto.getOptions(), dto.getStatement(), Type.MULTIPLE_CHOICE);
 
         if (taskRepository.existsByCourseIdAndStatement(course.getId(), dto.getStatement())) {
             throw new TaskValidationException("Já existe uma atividade com este enunciado neste curso.");
