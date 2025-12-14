@@ -12,6 +12,13 @@ public class NewTaskDTO {
     @Size(min = 4, max = 255)
     private String statement;
 
+    public NewTaskDTO(String statement, Integer order, Long courseId, List<TaskOptionDTO> options) {
+        this.statement = statement;
+        this.order = order;
+        this.courseId = courseId;
+        this.options = options;
+    }
+
     @NotNull
     private Integer order;
 
