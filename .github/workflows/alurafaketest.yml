@@ -12,6 +12,22 @@ jobs:
     build-and-test:
         runs-on: ubuntu-latest
 
+        services:
+            mysql:
+                image: mysql:8.0
+                env:
+                    MYSQL_ROOT_PASSWORD: admin
+                    MYSQL_DATABASE: alurafake
+                    MYSQL_USER: root
+                    MYSQL_PASSWORD: admin
+                ports:
+                    - 3306:3306
+                options: >-
+                    --health-cmd="mysqladmin ping --silent"
+                    --health-interval=10s
+                    --health-timeout=5s
+                    --health-retries=5
+
         steps:
             - name: Checkout in code
               uses: actions/checkout@v3
@@ -25,5 +41,13 @@ jobs:
             - name: Give permission to Maven
               run: chmod +x ./mvnw
 
-            - name: Build e Tests Maven
+            - name: Build and Run Tests
               run: ./mvnw clean test
+              env:
+                  SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3306/alurafake?useSSL=false&serverTimezone=UTC&createDatabaseIfNotExist=true
+                  SPRING_DATASOURCE_USERNAME: root
+                  SPRING_DATASOURCE_PASSWORD: admin
+                  SPRING_JPA_HIBERNATE_DDL_AUTO: none
+                  SPRING_JPA_SHOW_SQL: true
+                  SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQL8Dialect
+                  SPRING_FLYWAY_VALIDATE_ON_MIGRATE: false
