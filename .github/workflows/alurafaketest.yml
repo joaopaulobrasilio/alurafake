@@ -23,7 +23,7 @@ jobs:
                   java-version: '21'
 
             - name: Give permission to Maven
-            - run: chmod +x ./mvw
+              run: chmod +x ./mvnw
 
-            - name: Build e Testes Maven
+            - name: Build e Tests Maven
               run: ./mvnw clean test
