@@ -22,5 +22,8 @@ jobs:
                   distribution: temurin
                   java-version: '21'
 
+            - name: Give permission to Maven
+            - run: chmod +x ./mvw
+
             - name: Build e Testes Maven
               run: ./mvnw clean test
