@@ -1,6 +1,7 @@
 package br.com.alura.AluraFake.task;
 
 import br.com.alura.AluraFake.course.Course;
+import br.com.alura.AluraFake.course.Status;
 import br.com.alura.AluraFake.task.dto.TaskOptionDTO;
 import excepion.CourseStatusException;
 import excepion.TaskValidationException;
@@ -20,7 +21,7 @@ public class TaskValidatorService {
     }
 
     public void validateCourseStatus(Course course) {
-        if (course.getStatus().equals("BUILDING")) {
+        if (course.getStatus() == Status.BUILDING) {
             throw new CourseStatusException("Não é possível adicionar uma atividade a um curso que não está em BUILDING.");
         }
     }
@@ -35,7 +36,7 @@ public class TaskValidatorService {
     }
 
     public void validateOptions(List<TaskOptionDTO> options, String statement, Type type) {
-        if (type == Type.OPEN_TEXT) return; // OpenText não possui opções
+        if (type == Type.OPEN_TEXT) return;
 
         if (options == null || options.isEmpty()) {
             throw new TaskValidationException("As opções não podem estar vazias.");
