@@ -15,7 +15,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
-import org.springframework.security.test.context.support.WithMockUser;
+
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.*;
@@ -46,7 +46,6 @@ class CourseControllerTest {
     private ObjectMapper objectMapper;
 
     @Test
-    @WithMockUser(username = "paulo@alura.com.br", roles = {"INSTRUCTOR"})
     void newCourseDTO_should_return_not_found_when_user_not_exists() throws Exception {
         NewCourseDTO newCourseDTO = new NewCourseDTO();
         newCourseDTO.setTitle("Java");
@@ -63,7 +62,6 @@ class CourseControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "joao@alura.com.br", roles = {"INSTRUCTOR"})
     void newCourseDTO__should_return_forbidden_when_user_is_not_instructor() throws Exception {
         NewCourseDTO newCourseDTO = new NewCourseDTO();
         newCourseDTO.setTitle("Java");
@@ -80,7 +78,6 @@ class CourseControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "maria@alura.com.br", roles = {"INSTRUCTOR"})
     void newCourseDTO__should_return_created_when_user_is_instructor() throws Exception {
         NewCourseDTO newCourseDTO = new NewCourseDTO();
         newCourseDTO.setTitle("Java");
@@ -98,7 +95,6 @@ class CourseControllerTest {
     }
 
     @Test
-    @WithMockUser
     void getAllCourses_should_return_list_of_courses() throws Exception {
 
         Course course1 = new Course("Java Básico", "Curso Java", new User("Paulo", "paulo@alura.com.br", Role.INSTRUCTOR));
@@ -119,7 +115,6 @@ class CourseControllerTest {
     }
 
     @Test
-    @WithMockUser
     void reportCourses_should_return_course_report() throws Exception {
         Long instructorId = 1L;
         InstructorCourseReportResponse report = new InstructorCourseReportResponse(List.of(), 2L);
@@ -132,7 +127,6 @@ class CourseControllerTest {
     }
 
     @Test
-    @WithMockUser(roles = {"INSTRUCTOR"})
     void publishCourse_should_return_ok() throws Exception {
         Long courseId = 1L;
 
