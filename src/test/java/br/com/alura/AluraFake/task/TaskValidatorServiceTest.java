@@ -54,7 +54,7 @@ class TaskValidatorServiceTest {
                 "Curso de Java",
                 instructor
         );
-        course.setStatus(Status.BUILDING);
+        course.setStatus(Status.PUBLISHED);
 
         assertThrows(CourseStatusException.class,
                 () -> validator.validateCourseStatus(course));
@@ -69,7 +69,7 @@ class TaskValidatorServiceTest {
                 "Curso de Java",
                 instructor
         );
-        course.setStatus(Status.PUBLISHED);
+        course.setStatus(Status.BUILDING);
 
         assertDoesNotThrow(() ->
                 validator.validateCourseStatus(course));
@@ -103,15 +103,15 @@ class TaskValidatorServiceTest {
     @Test
     void should_throw_exception_when_options_are_empty() {
         assertThrows(TaskValidationException.class,
-                () -> validator.validateOptions(List.of(), "Pergunta", Type.SINGLE_CHOICE));
+                () -> validator.validateOptions(List.of(), "O que aprendemos na aula de hoje?", Type.SINGLE_CHOICE));
     }
 
     @Test
     void should_throw_exception_when_option_equals_statement() {
         assertThrows(TaskValidationException.class,
                 () -> validator.validateOptions(
-                        List.of(new TaskOptionDTO("Pergunta", true)),
-                        "Pergunta",
+                        List.of(new TaskOptionDTO("O que é Spring", true)),
+                        "O que é POO",
                         Type.SINGLE_CHOICE
                 ));
     }
@@ -137,7 +137,7 @@ class TaskValidatorServiceTest {
                                 new TaskOptionDTO("Java", true),
                                 new TaskOptionDTO("Kotlin", true)
                         ),
-                        "Pergunta",
+                        "O que é Angular?",
                         Type.SINGLE_CHOICE
                 ));
     }
@@ -150,7 +150,7 @@ class TaskValidatorServiceTest {
                                 new TaskOptionDTO("Java", false),
                                 new TaskOptionDTO("Kotlin", false)
                         ),
-                        "Pergunta",
+                        "Defina oque é uma classe?",
                         Type.SINGLE_CHOICE
                 ));
     }
@@ -163,7 +163,7 @@ class TaskValidatorServiceTest {
                                 new TaskOptionDTO("Java", true),
                                 new TaskOptionDTO("Kotlin", false)
                         ),
-                        "Pergunta",
+                        "Oque é estrutura de repetição?",
                         Type.SINGLE_CHOICE
                 ));
     }
@@ -177,7 +177,7 @@ class TaskValidatorServiceTest {
                                 new TaskOptionDTO("Python", false),
                                 new TaskOptionDTO("C#", false)
                         ),
-                        "Pergunta",
+                        "Oque é Herença?",
                         Type.MULTIPLE_CHOICE
                 ));
     }
@@ -191,7 +191,7 @@ class TaskValidatorServiceTest {
                                 new TaskOptionDTO("Kotlin", true),
                                 new TaskOptionDTO("Scala", true)
                         ),
-                        "Pergunta",
+                        "O que é polimorfismo ?",
                         Type.MULTIPLE_CHOICE
                 ));
     }
