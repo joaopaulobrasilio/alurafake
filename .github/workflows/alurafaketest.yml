@@ -1,0 +1,54 @@
+name: Build and Test
+
+on:
+    push:
+        branches:
+            - feat_alurafake_dev_final
+    pull_request:
+        branches:
+            - main
+
+jobs:
+    build-and-test:
+        runs-on: ubuntu-latest
+
+        services:
+            mysql:
+                image: mysql:8
+                env:
+                    MYSQL_ROOT_PASSWORD: admin
+                    MYSQL_DATABASE: alurafake_test
+                ports:
+                    - 3306:3306
+                options: >-
+                    --health-cmd="mysqladmin ping --silent"
+                    --health-interval=10s
+                    --health-timeout=5s
+                    --health-retries=5
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v3
+
+            - name: Set up JDK 21
+              uses: actions/setup-java@v3
+              with:
+                  distribution: temurin
+                  java-version: '21'
+
+            -   name: Wait for MySQL to be ready
+                run: |
+                    echo "Waiting for MySQL..."
+                    for i in {1..30}; do
+                      mysqladmin ping -h 127.0.0.1 -uroot -padmin && break
+                      echo "MySQL not ready yet. Waiting..."
+                      sleep 5
+                    done
+
+            -   name: Create test database
+                run: |
+                    mysql -h 127.0.0.1 -uroot -padmin -e "CREATE DATABASE IF NOT EXISTS alurafake_test;"
+
+            -   name: Build and run tests
+                run: mvn clean test
+

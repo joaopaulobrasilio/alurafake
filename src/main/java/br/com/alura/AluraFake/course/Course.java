@@ -21,8 +21,25 @@ public class Course {
     private Status status;
     private LocalDateTime publishedAt;
 
-    @Deprecated
-    public Course(){}
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setInstructor(User instructor) {
+        this.instructor = instructor;
+    }
+
+   public Course(){
+
+   }
 
     public Course(String title, String description, User instructor) {
         Assert.isTrue(instructor.isInstructor(), "Usuario deve ser um instrutor");
@@ -44,6 +61,10 @@ public class Course {
         return title;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public void setStatus(Status status) {
         this.status = status;
     }
@@ -58,6 +79,10 @@ public class Course {
 
     public Status getStatus() {
         return status;
+    }
+
+    public void setPublishedAt(LocalDateTime publishedAt) {
+        this.publishedAt = publishedAt;
     }
 
     public LocalDateTime getPublishedAt() {
