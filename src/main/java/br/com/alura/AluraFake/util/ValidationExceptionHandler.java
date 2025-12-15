@@ -1,6 +1,5 @@
 package br.com.alura.AluraFake.util;
 
-import br.com.alura.AluraFake.util.ErrorItemDTO;
 import excepion.CourseStatusException;
 import excepion.TaskValidationException;
 import jakarta.persistence.EntityNotFoundException;
