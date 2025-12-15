@@ -2,6 +2,7 @@ package br.com.alura.AluraFake.course;
 
 
 import br.com.alura.AluraFake.course.dto.NewCourseDTO;
+import br.com.alura.AluraFake.task.TaskController;
 import br.com.alura.AluraFake.user.*;
 
 import br.com.alura.AluraFake.util.ValidationExceptionHandler;
@@ -10,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
@@ -24,9 +26,8 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@SpringBootTest
-@Import(ValidationExceptionHandler.class)
-@AutoConfigureMockMvc
+@WebMvcTest(TaskController.class)
+@AutoConfigureMockMvc(addFilters = false)
 class CourseControllerTest {
 
     @Autowired
