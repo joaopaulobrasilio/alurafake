@@ -11,25 +11,12 @@ on:
 jobs:
     build-and-test:
         runs-on: ubuntu-latest
-        services:
-            mysql:
-                image: mysql:8.0
-                env:
-                    MYSQL_ROOT_PASSWORD: admin
-                    MYSQL_DATABASE: alurafake
-                ports:
-                    - 3306:3306
-                options: >-
-                    --health-cmd="mysqladmin ping --silent"
-                    --health-interval=10s
-                    --health-timeout=5s
-                    --health-retries=5
 
         steps:
-            - name: Checkout code
+            - name: Checkout in code
               uses: actions/checkout@v3
 
-            - name: Set up Java
+            - name: Configuration Java
               uses: actions/setup-java@v3
               with:
                   distribution: temurin
@@ -38,16 +25,5 @@ jobs:
             - name: Give permission to Maven
               run: chmod +x ./mvnw
 
-            - name: Wait for MySQL to be ready
-              run: |
-                  echo "Waiting for MySQL to start..."
-                  until mysql -h 127.0.0.1 -P 3306 -u root -padmin -e "SELECT 1;" >/dev/null 2>&1; do
-                    sleep 5
-                  done
-
-            - name: Build and run tests
+            - name: Build e Tests Maven
               run: ./mvnw clean test
-              env:
-                  SPRING_DATASOURCE_URL: jdbc:mysql://127.0.0.1:3306/alurafake?useSSL=false&serverTimezone=UTC&createDatabaseIfNotExist=true
-                  SPRING_DATASOURCE_USERNAME: root
-                  SPRING_DATASOURCE_PASSWORD: admin
