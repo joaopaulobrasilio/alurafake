@@ -39,9 +39,9 @@ class CourseServiceTest {
     @Test
     void when__to_publish_should_occur_successfully() {
 
-        User user = new User("Joao", "joao@alura.com.br", Role.INSTRUCTOR);
+        User user = new User("Marcos", "marcos@alura.com.br", Role.INSTRUCTOR);
 
-        Course course = new Course("Java Básico", "Curso Java", user);
+        Course course = new Course("JavaScript", "Curso de desenvolvimento Web", user);
 
         when(repository.findById(1L)).thenReturn(Optional.of(course));
         when(taskRepository.findTaskTypesByCourseId(1L)).thenReturn(List.of(Type.SINGLE_CHOICE, Type.OPEN_TEXT, Type.MULTIPLE_CHOICE));
@@ -70,8 +70,8 @@ class CourseServiceTest {
 
     @Test
     void should_throw_exception_when_course_has_no_activities() {
-        User user = new User("Joao", "joao@alura.com.br", Role.INSTRUCTOR);
-        Course course = new Course("Curso Vazio", "Descrição", user);
+        User user = new User("José", "jose@alura.com.br", Role.INSTRUCTOR);
+        Course course = new Course("Curso  Python", "Curso de Python avançado", user);
 
         when(repository.findById(1L)).thenReturn(Optional.of(course));
         when(taskRepository.findOrdersByCourseId(1L)).thenReturn(List.of()); // nenhuma atividade
@@ -86,8 +86,8 @@ class CourseServiceTest {
 
     @Test
     void should_throw_exception_when_course_status_is_not_building() {
-        User user = new User("Joao", "joao@alura.com.br", Role.INSTRUCTOR);
-        Course course = new Course("Java Avançado", "Curso Java", user);
+        User user = new User("Maria", "maria@alura.com.br", Role.INSTRUCTOR);
+        Course course = new Course("Java Avançado", "Curso  de Java Avançado", user);
         course.setStatus(Status.PUBLISHED);
 
         when(repository.findById(1L)).thenReturn(Optional.of(course));
@@ -106,8 +106,8 @@ class CourseServiceTest {
 
     @Test
     void should_throw_exception_when_tasks_order_is_not_sequential() {
-        User user = new User("Joao", "joao@alura.com.br", Role.INSTRUCTOR);
-        Course course = new Course("Java Avançado", "Curso Java", user);
+        User user = new User("Mario", "mario@alura.com.br", Role.INSTRUCTOR);
+        Course course = new Course("Java para iniciante", "Curso de Java Iniciante", user);
 
         course.setStatus(Status.BUILDING);
 
@@ -131,7 +131,7 @@ class CourseServiceTest {
     void should_throw_exception_when_course_has_order_is_empty() {
         User user = new User("Joao", "joao@alura.com.br", Role.INSTRUCTOR);
 
-        Course course = new Course("Java Básico", "Curso Java", user);
+        Course course = new Course("Java Básico", "Curso  de Java Básico", user);
 
         when(repository.findById(1L)).thenReturn(Optional.of(course));
         when(taskRepository.findTaskTypesByCourseId(1L)).thenReturn(List.of(Type.SINGLE_CHOICE, Type.OPEN_TEXT, Type.MULTIPLE_CHOICE));

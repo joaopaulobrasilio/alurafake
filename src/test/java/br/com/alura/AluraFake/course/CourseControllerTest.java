@@ -64,8 +64,8 @@ class CourseControllerTest {
     @Test
     void newCourseDTO__should_return_forbidden_when_user_is_not_instructor() throws Exception {
         NewCourseDTO newCourseDTO = new NewCourseDTO();
-        newCourseDTO.setTitle("Java");
-        newCourseDTO.setDescription("Curso de Java");
+        newCourseDTO.setTitle("Angular");
+        newCourseDTO.setDescription("Curso de Angular");
         newCourseDTO.setEmailInstructor("joao@alura.com.br");
         User user = new User("Joao", "joao@alura.com.br", Role.STUDENT);
 
@@ -80,8 +80,8 @@ class CourseControllerTest {
     @Test
     void newCourseDTO__should_return_created_when_user_is_instructor() throws Exception {
         NewCourseDTO newCourseDTO = new NewCourseDTO();
-        newCourseDTO.setTitle("Java");
-        newCourseDTO.setDescription("Curso de Java");
+        newCourseDTO.setTitle("Banco de dados");
+        newCourseDTO.setDescription("Curso de Banco de dados");
         newCourseDTO.setEmailInstructor("maria@alura.com.br");
 
         User user = new User("Maria", "maria@alura.com.br", Role.INSTRUCTOR);

@@ -36,7 +36,7 @@ class CourseReportServiceTest {
 
         User user = new User("Joao", "joao@alura.com.br", Role.INSTRUCTOR);
 
-        Course course = new Course("Java", "Curso Java", user);
+        Course course = new Course("Java", "Curso de Java", user);
         course.setId(10L);
         course.setStatus(Status.PUBLISHED);
 
