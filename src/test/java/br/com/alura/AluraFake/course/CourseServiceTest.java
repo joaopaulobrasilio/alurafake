@@ -1,6 +1,5 @@
 package br.com.alura.AluraFake.course;
 
-import br.com.alura.AluraFake.task.Task;
 import br.com.alura.AluraFake.task.TaskRepository;
 import br.com.alura.AluraFake.task.Type;
 import br.com.alura.AluraFake.user.Role;
@@ -12,10 +11,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,8 +46,6 @@ class CourseServiceTest {
         when(taskRepository.findOrdersByCourseId(1L)).thenReturn(List.of(1, 2, 3));
 
         courseService.publishCourse(1L);
-
-        verify(repository).save(course);
         verify(taskRepository).findOrdersByCourseId(1L);
         verify(taskRepository).findTaskTypesByCourseId(1L);
         verify(repository, times(1)).save(course);
@@ -76,7 +70,6 @@ class CourseServiceTest {
         Course course = new Course("Curso  Python", "Curso de Python avançado", user);
 
         when(repository.findById(1L)).thenReturn(Optional.of(course));
-        when(taskRepository.findOrdersByCourseId(1L)).thenReturn(List.of()); // nenhuma atividade
         when(taskRepository.findTaskTypesByCourseId(1L)).thenReturn(List.of());
 
         assertThrows(CourseStatusException.class, () -> {
@@ -93,10 +86,6 @@ class CourseServiceTest {
         course.setStatus(Status.PUBLISHED);
 
         when(repository.findById(1L)).thenReturn(Optional.of(course));
-        when(taskRepository.findOrdersByCourseId(1L)).thenReturn(List.of(1, 2, 3));
-        when(taskRepository.findTaskTypesByCourseId(1L))
-                .thenReturn(List.of(Type.OPEN_TEXT, Type.MULTIPLE_CHOICE, Type.SINGLE_CHOICE));
-
         CourseStatusException exception = assertThrows(CourseStatusException.class, () -> {
             courseService.publishCourse(1L);
         });
@@ -142,6 +131,7 @@ class CourseServiceTest {
         assertThrows(CourseStatusException.class, () -> {
             courseService.publishCourse(1L);
         });
+        verify(repository, never()).save(any());
 
     }
 
