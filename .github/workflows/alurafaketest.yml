@@ -3,7 +3,7 @@ name: Build and Test
 on:
     push:
         branches:
-            - - feat_alurafake_dev_final
+            - feat_alurafake_dev_final
     pull_request:
         branches:
             - main
