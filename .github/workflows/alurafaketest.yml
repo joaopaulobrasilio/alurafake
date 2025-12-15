@@ -36,14 +36,19 @@ jobs:
                   distribution: temurin
                   java-version: '17'
 
-            - name: Wait for MySQL to be ready
-              run: |
-                  echo "Waiting for MySQL..."
-                  for i in {1..30}; do
-                    mysqladmin ping -h 127.0.0.1 -uroot -padmin && break
-                    echo "MySQL not ready yet. Waiting..."
-                    sleep 5
-                  done
+            -   name: Wait for MySQL to be ready
+                run: |
+                    echo "Waiting for MySQL..."
+                    for i in {1..30}; do
+                      mysqladmin ping -h 127.0.0.1 -uroot -padmin && break
+                      echo "MySQL not ready yet. Waiting..."
+                      sleep 5
+                    done
 
-            - name: Build and run tests
-              run: mvn clean test
+            -   name: Create test database
+                run: |
+                    mysql -h 127.0.0.1 -uroot -padmin -e "CREATE DATABASE IF NOT EXISTS alurafake_test;"
+
+            -   name: Build and run tests
+                run: mvn clean test
+
