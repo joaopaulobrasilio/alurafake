@@ -1,15 +1,17 @@
 package br.com.alura.AluraFake;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 
-@WebMvcTest(AluraFakeApplication.class)
+@SpringBootTest
+@ActiveProfiles("test")
 class AluraFakeApplicationTest {
 
     @Test
     void should_start_application() {
-        AluraFakeApplication.main(new String[]{});
+
     }
 
 
