@@ -11,6 +11,19 @@ on:
 jobs:
     build-and-test:
         runs-on: ubuntu-latest
+        services:
+            mysql:
+                image: mysql:8.0
+                env:
+                    MYSQL_ROOT_PASSWORD: root
+                    MYSQL_DATABASE: alurafake_test
+                ports:
+                    - 3306:3306
+                options: >-
+                    --health-cmd="mysqladmin ping -h localhost -p$MYSQL_ROOT_PASSWORD"
+                    --health-interval=10s
+                    --health-timeout=5s
+                    --health-retries=5
 
         steps:
             - name: Checkout in code
@@ -25,5 +38,12 @@ jobs:
             - name: Give permission to Maven
               run: chmod +x ./mvnw
 
-            - name: Build e Tests Maven
-              run: ./mvnw clean test
+            - name: Wait for MySQL to be ready
+              run: |
+                  until mysqladmin ping -h 127.0.0.1 -P 3306 -uroot -proot --silent; do
+                    echo "Waiting for MySQL..."
+                    sleep 5
+                  done
+
+            - name: Build and run tests
+              run: ./mvnw clean test -Dspring.profiles.active=test
