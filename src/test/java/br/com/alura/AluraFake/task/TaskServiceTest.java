@@ -2,7 +2,6 @@ package br.com.alura.AluraFake.task;
 
 import br.com.alura.AluraFake.course.Course;
 import br.com.alura.AluraFake.course.CourseRepository;
-
 import br.com.alura.AluraFake.task.dto.NewTaskDTO;
 import br.com.alura.AluraFake.task.dto.TaskOptionDTO;
 import br.com.alura.AluraFake.user.Role;
@@ -14,7 +13,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 import java.util.Optional;
