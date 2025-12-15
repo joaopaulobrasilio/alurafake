@@ -29,7 +29,7 @@ class TaskValidatorServiceTest {
     @Test
     void should_accept_valid_statement() {
         assertDoesNotThrow(() ->
-                validator.validateStatement("Explique o que é Java")
+                validator.validateStatement("Explique o que é Java?")
         );
     }
 
@@ -47,11 +47,11 @@ class TaskValidatorServiceTest {
 
     @Test
     void should_throw_exception_when_course_is_not_building() {
-        User instructor = new User("João", "joao@alura.com.br", Role.INSTRUCTOR);
+        User instructor = new User("José", "jose@alura.com.br", Role.INSTRUCTOR);
 
         Course course = new Course(
-                "Java Básico",
-                "Curso de Java",
+                "Curso de Angular",
+                "Curso de angualar do básico ao avançado",
                 instructor
         );
         course.setStatus(Status.PUBLISHED);
@@ -97,7 +97,7 @@ class TaskValidatorServiceTest {
     @Test
     void should_ignore_options_for_open_text() {
         assertDoesNotThrow(() ->
-                validator.validateOptions(null, "Explique Java", Type.OPEN_TEXT));
+                validator.validateOptions(null, "Explique Java?", Type.OPEN_TEXT));
     }
 
     @Test
@@ -110,8 +110,10 @@ class TaskValidatorServiceTest {
     void should_throw_exception_when_option_equals_statement() {
         assertThrows(TaskValidationException.class,
                 () -> validator.validateOptions(
-                        List.of(new TaskOptionDTO("O que é Spring", true)),
-                        "O que é POO",
+                        List.of(new TaskOptionDTO("Programação orientado a objeto", true),
+                                new TaskOptionDTO("Uma lingaguem de programação", true)
+                                ),
+                        "O que é POO?",
                         Type.SINGLE_CHOICE
                 ));
     }
@@ -121,8 +123,8 @@ class TaskValidatorServiceTest {
         assertThrows(TaskValidationException.class,
                 () -> validator.validateOptions(
                         List.of(
-                                new TaskOptionDTO("Java", true),
-                                new TaskOptionDTO("Java", false)
+                                new TaskOptionDTO("Linguagem", true),
+                                new TaskOptionDTO("Framework", true)
                         ),
                         "O que é Java?",
                         Type.SINGLE_CHOICE
@@ -160,7 +162,7 @@ class TaskValidatorServiceTest {
         assertDoesNotThrow(() ->
                 validator.validateOptions(
                         List.of(
-                                new TaskOptionDTO("Java", true),
+                                new TaskOptionDTO("É um comando que executa um bloco de código múltiplas vezes", true),
                                 new TaskOptionDTO("Kotlin", false)
                         ),
                         "Oque é estrutura de repetição?",
@@ -177,7 +179,7 @@ class TaskValidatorServiceTest {
                                 new TaskOptionDTO("Python", false),
                                 new TaskOptionDTO("C#", false)
                         ),
-                        "Oque é Herença?",
+                        "Qual linguagem de progração no qual a logo é uma xicara de café?",
                         Type.MULTIPLE_CHOICE
                 ));
     }

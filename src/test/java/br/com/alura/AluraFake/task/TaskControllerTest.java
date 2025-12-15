@@ -40,7 +40,7 @@ class TaskControllerTest {
     @Test
     void should_create_open_text_task() throws Exception {
 
-        NewTaskDTO dto = new NewTaskDTO("Explique o que é Java", 1, 1L, List.of());
+        NewTaskDTO dto = new NewTaskDTO("Explique o que é Java?", 1, 1L, List.of());
 
         mockMvc.perform(
                         post("/task/new/opentext")
@@ -54,7 +54,7 @@ class TaskControllerTest {
 
     @Test
     void should_create_single_choice_task() throws Exception {
-        NewTaskDTO dto = new NewTaskDTO("Explique oque é Angular", 1, 1L, List.of());
+        NewTaskDTO dto = new NewTaskDTO("Explique oque é Angular?", 1, 1L, List.of());
 
         mockMvc.perform(post("/task/new/singlechoice")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -66,7 +66,7 @@ class TaskControllerTest {
 
     @Test
     void should_create_multiple_choice_task() throws Exception {
-        NewTaskDTO dto = new NewTaskDTO("O que é uma Lista", 1, 1L, List.of());
+        NewTaskDTO dto = new NewTaskDTO("O que é uma Lista?", 1, 1L, List.of());
 
         mockMvc.perform(post("/task/new/multiplechoice")
                         .contentType(MediaType.APPLICATION_JSON)

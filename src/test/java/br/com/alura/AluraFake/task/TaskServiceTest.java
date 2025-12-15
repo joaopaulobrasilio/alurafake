@@ -42,12 +42,12 @@ class TaskServiceTest {
     @Test
     void should_create_open_text_task_successfully() {
 
-        User instructor = new User("Joao", "joao@alura.com.br", Role.INSTRUCTOR);
-        Course course = new Course("Java", "Curso Java", instructor);
+        User instructor = new User("Maria", "maria@alura.com.br", Role.INSTRUCTOR);
+        Course course = new Course("Curso de desenvolvimento web", " iniciando com html,css e JS", instructor);
         course.setId(1L);
 
         NewTaskDTO dto =
-                new NewTaskDTO("Explique o que é Java", 1, 1L, List.of());
+                new NewTaskDTO("Explique o que é JS ", 1, 1L, List.of());
 
         when(courseRepository.findById(1L))
                 .thenReturn(Optional.of(course));
@@ -73,7 +73,7 @@ class TaskServiceTest {
     void should_throw_exception_when_course_not_found() {
 
         NewTaskDTO dto =
-                new NewTaskDTO("Explique Java", 1, 99L, List.of());
+                new NewTaskDTO("Explique  o que é Java?", 1, 99L, List.of());
 
         when(courseRepository.findById(99L))
                 .thenReturn(Optional.empty());
@@ -91,11 +91,11 @@ class TaskServiceTest {
     void should_throw_exception_when_statement_already_exists() {
 
         User instructor = new User("Joao", "joao@alura.com.br", Role.INSTRUCTOR);
-        Course course = new Course("Java", "Curso Java", instructor);
+        Course course = new Course("Python", "Curso de python", instructor);
         course.setId(1L);
 
         NewTaskDTO dto =
-                new NewTaskDTO("Explique Java", 1, 1L, List.of());
+                new NewTaskDTO("Qual a diferença de python e java ?", 1, 1L, List.of());
 
         when(courseRepository.findById(1L))
                 .thenReturn(Optional.of(course));
@@ -114,8 +114,8 @@ class TaskServiceTest {
     @Test
     void should_create_single_choice_task_successfully() {
 
-        User instructor = new User("Joao", "joao@alura.com.br", Role.INSTRUCTOR);
-        Course course = new Course("Java", "Curso Java", instructor);
+        User instructor = new User("Marcia", "marcia@alura.com.br", Role.INSTRUCTOR);
+        Course course = new Course("Curso de banco de dados", "Curso de banco de dados noSQL", instructor);
         course.setId(1L);
 
         NewTaskDTO dto = new NewTaskDTO(
@@ -149,17 +149,17 @@ class TaskServiceTest {
     @Test
     void should_throw_exception_when_single_choice_options_are_invalid() {
 
-        User instructor = new User("Joao", "joao@alura.com.br", Role.INSTRUCTOR);
-        Course course = new Course("Java", "Curso Java", instructor);
+        User instructor = new User("Marcos", "marcos@alura.com.br", Role.INSTRUCTOR);
+        Course course = new Course("JavaScript", "JavaScript básico", instructor);
         course.setId(1L);
 
         NewTaskDTO dto = new NewTaskDTO(
-                "O que é Java?",
+                "O que é JavaScript?",
                 1,
                 1L,
                 List.of(
                         new TaskOptionDTO("Linguagem", true),
-                        new TaskOptionDTO("Plataforma", true) // inválido
+                        new TaskOptionDTO("Plataforma", true)
                 )
         );
 
@@ -208,7 +208,7 @@ class TaskServiceTest {
     @Test
     void should_create_multiple_choice_task_successfully() {
 
-        User instructor = new User("Joao", "joao@alura.com.br", Role.INSTRUCTOR);
+        User instructor = new User("Mario", "mario@alura.com.br", Role.INSTRUCTOR);
         Course course = new Course("Java", "Curso Java", instructor);
         course.setId(1L);
 
