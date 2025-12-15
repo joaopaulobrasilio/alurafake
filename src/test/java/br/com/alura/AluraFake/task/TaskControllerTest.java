@@ -25,7 +25,6 @@ import static org.mockito.Mockito.verify;
 
 @WebMvcTest(TaskController.class)
 @AutoConfigureMockMvc(addFilters = false)
-@Import(ValidationExceptionHandler.class)
 class TaskControllerTest {
 
     @Autowired
